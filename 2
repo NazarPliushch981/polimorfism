@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 2: Дата</title>
+</head>
+<body>
+    <h2>Document</h2>
+    <div id="dateOutput"></div>
+
+    <script>
+        class ExtendedDate extends Date {
+            getTextMonth() {
+                let months = ["січня", "лютого", "березня", "квітня", "травня", "червня", "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"];
+                return this.getDate() + " " + months[this.getMonth()];
+            }
+
+            isFutureOrCurrent() {
+                let now = new Date();
+                now.setHours(0,0,0,0);
+                let temp = new Date(this.getTime());
+                temp.setHours(0,0,0,0);
+                return temp >= now;
+            }
+
+            isLeapYear() {
+                let y = this.getFullYear();
+                return (y % 4 === 0 && y % 100 !== 0) || (y % 400 === 0);
+            }
+
+            getNextDate() {
+                let next = new Date(this.getTime());
+                next.setDate(this.getDate() + 1);
+                return next.toLocaleDateString();
+            }
+        }
+
+        let testDate = new ExtendedDate(2026, 11, 31); // 31 грудня 2026
+        let dateBox = document.getElementById("dateOutput");
+        dateBox.innerHTML += "<p>Дата: " + testDate.getTextMonth() + "</p>";
+        dateBox.innerHTML += "<p>Майбутня/поточна?: " + testDate.isFutureOrCurrent() + "</p>";
+        dateBox.innerHTML += "<p>Високосний?: " + testDate.isLeapYear() + "</p>";
+        dateBox.innerHTML += "<p>Наступна: " + testDate.getNextDate() + "</p>";
+    </script>
+</body>
+</html>
