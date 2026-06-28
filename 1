@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 1: Маркер</title>
+</head>
+<body>
+    <h2>Завдання 1: Маркер</h2>
+    <div id="markerOutput"></div>
+
+    <script>
+        class SimpleMarker {
+            constructor(color, percent) {
+                this.color = color;
+                this.percent = percent;
+            }
+
+            print(text) {
+                let output = "";
+                for (let i = 0; i < text.length; i++) {
+                    let char = text[i];
+                    if (char !== " ") {
+                        if (this.percent >= 0.5) {
+                            output += char;
+                            this.percent -= 0.5;
+                        } else {
+                            break;
+                        }
+                    } else {
+                        output += char;
+                    }
+                }
+                let box = document.getElementById("markerOutput");
+                box.innerHTML += `<p style="color: ${this.color}">${output}</p>`;
+                box.innerHTML += `<p>Залишок: ${this.percent}%</p>`;
+            }
+        }
+        class RefillableMarker extends SimpleMarker {
+            refill(amount) {
+                this.percent += amount;
+                if (this.percent > 100) this.percent = 100;
+                document.getElementById("markerOutput").innerHTML += `<p><b>Заправлено на +${amount}%. Зараз: ${this.percent}%</b></p>`;
+            }
+        }
+
+        let myMarker = new RefillableMarker("blue", 10);
+        myMarker.print("Hello World");
+        myMarker.refill(60);
+        myMarker.print("Пишемо знову маркером");
+    </script>
+</body>
+</html>
